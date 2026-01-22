@@ -1,21 +1,39 @@
 ﻿namespace Honse;
 
-class Animation
+public class Animation
 {
     ///length of animation
     private int length;
     
     
     private int frame = 0;
-    private string[] frames;
+    private string[] sprites;
 
-    /// <param name="frames">the path for the frames of the animation</param>
-    Animation(string[] frames)
+    /// <param name="sprites">the path for the sprite of the animation</param>
+    public Animation(string[] sprites)
     {
-        this.frames = new string[frames.Length];
-        for (int i = 0; i < frames.Length; i++)
+        length = sprites.Length;
+        this.sprites = new string[length];
+        for (int i = 0; i < length; i++)
         {
-            this.frames[i] = File.ReadAllText(frames[i]);
+            this.sprites[i] = File.ReadAllText(sprites[i]);
         }
+    }
+
+    public string GetSprite()
+    {
+        return sprites[frame];
+    }
+
+    public string GetNextSprite()
+    {
+        NextSprite();
+        return GetSprite();
+    }
+    
+    public void NextSprite()
+    {
+        //increment frame
+        frame = (frame + 1) % (length);
     }
 }
