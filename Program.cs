@@ -3,7 +3,7 @@
 
 namespace Honse;
 
-class Program
+public static class Program
 {
     static void Main(string[] args)
     {
@@ -34,4 +34,6 @@ class Program
         
         Console.ReadLine();
     }
+
+
 }

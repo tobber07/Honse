@@ -41,28 +41,17 @@ public class Horse
     void Clear()
     {
         string sprite = animation.GetSprite();
+        
         //replaces every char in sprite with a blank space except \n
         sprite = Regex.Replace(sprite, @"[^\n]", " ");
         
-        int lineNum = 0;
-        foreach (string line in sprite.Split("\n"))
-        {
-            Console.SetCursorPosition(x, y+lineNum);
-            Console.Write(line);
-            lineNum++;
-        }
+        Screen.DisplayText(sprite, x, y);
     }
 
     void Draw()
     {
         string sprite = animation.GetNextSprite();
         
-        int lineNum = 0;
-        foreach (string line in sprite.Split("\n"))
-        {
-            Console.SetCursorPosition(x, y+lineNum);
-            Console.Write(line);
-            lineNum++;
-        }
+        Screen.DisplayText(sprite, x, y);
     }
 }
