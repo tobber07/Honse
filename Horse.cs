@@ -33,6 +33,11 @@ public class Horse
         Draw();
     }
 
+    public void Move(int x, int y)
+    {
+        MoveTo(this.x + x, this.y + y);
+    }
+
     void Clear()
     {
         string sprite = animation.GetSprite();
