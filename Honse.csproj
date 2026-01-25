@@ -12,5 +12,9 @@
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
     </ItemGroup>
+    
+    <ItemGroup>
+      <PackageReference Include="System.Windows.Extensions" Version="10.0.2" />
+    </ItemGroup>
 
 </Project>

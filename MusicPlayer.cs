@@ -1,9 +1,13 @@
 ﻿namespace Honse;
 
+using System.Media;
+
 public static class MusicPlayer
 {
     public static void Play()
     {
-        Console.Beep(440, 1);
+        // SoundPlayer soundPlayer = new SoundPlayer(@"Assets/Music/mm.wav");
+        // soundPlayer.Play();
     }
+    
 }

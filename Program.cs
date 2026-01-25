@@ -1,17 +1,30 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿using System;
+using System.Runtime.InteropServices;
 
 
 namespace Honse;
 
+
 public static class Program
 {
+
     static void Main(string[] args)
     {
+        Console.SetWindowSize(Screen.Width, Screen.Height);
         Console.CursorVisible = false;
-        StartScreen.Display();
-        Console.Beep(440, 1000);
-        Console.Beep(880, 1000);
+        
+        // Console.SetBufferSize(Screen.Width, Screen.Height);
+
+
+        Console.WriteLine(Console.WindowWidth);
+        Console.WriteLine(Console.WindowHeight);
+        
+        // MusicPlayer.Play();
+        // StartScreen.Display();
         Console.ReadKey();
+        
+        Console.WriteLine(Console.BufferWidth);
+        Console.WriteLine(Console.BufferHeight);
         
         
         
@@ -21,22 +34,28 @@ public static class Program
             "Assets/Horses/Horse1/run3.txt"
         ]));
         
-        horse.MoveTo(50, 20);
-
-        int pos = 40;
-        int i = 0;
+        Horse horse2 = new Horse(10, 10, "peter", new Animation([
+            "Assets/Horses/Horse1/run1.txt",
+            "Assets/Horses/Horse1/run2.txt",
+            "Assets/Horses/Horse1/run3.txt"
+        ]));
+        
+        Horse horse3 = new Horse(10, 10, "peter", new Animation([
+            "Assets/Horses/Horse1/run1.txt",
+            "Assets/Horses/Horse1/run2.txt",
+            "Assets/Horses/Horse1/run3.txt"
+        ]));
+        
+        horse.MoveTo(50, 10);
+        horse2.MoveTo(50, 15);
+        horse3.MoveTo(50, 20);
+        
         while (true)
         {
-            horse.MoveTo(pos, 20);
+            horse.Move(1, 0);
+            horse2.Move(1,0);
+            horse3.Move(1,0);
             Thread.Sleep(100);
-            if (i > 0)
-            {
-                pos++;
-                i = 0;
-            }
-            
-
-            i++;
         }
         
         Console.ReadLine();
