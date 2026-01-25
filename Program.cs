@@ -8,6 +8,13 @@ public static class Program
     static void Main(string[] args)
     {
         Console.CursorVisible = false;
+        StartScreen.Display();
+        Console.Beep(440, 1000);
+        Console.Beep(880, 1000);
+        Console.ReadKey();
+        
+        
+        
         Horse horse = new Horse(10, 10, "peter", new Animation([
             "Assets/Horses/Horse1/run1.txt",
             "Assets/Horses/Horse1/run2.txt",
