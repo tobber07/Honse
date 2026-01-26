@@ -31,6 +31,7 @@ public class Horse
     private readonly Animation animation;
     private HorseStats stats;
 
+    static Random rnd = new Random();
 
     public Horse(int x, int y, string name, Animation animation)
     {
@@ -93,5 +94,15 @@ public class Horse
         string sprite = animation.GetNextSprite();
         
         Screen.DisplayText(sprite, x, y);
+    }
+
+    /// <summary>
+    /// Returns a random name.
+    /// </summary>
+    /// <returns>Random name</returns>
+    public static string RandomName()
+    {
+        string[] names = File.ReadAllLines("Assets/HorseNames.txt");
+        return names[rnd.Next(0, names.Length - 1)];
     }
 }
