@@ -2,8 +2,13 @@
 
 public class StartScreen
 {
+    
+    /// <summary>
+    /// Clears the current screen, then shows the start screen.
+    /// </summary>
     public static void Display()
     {
+        Screen.Clear();
         Console.WriteLine("""
                       $$\   $$\  $$$$$$\  $$\   $$\  $$$$$$\  $$$$$$$$\ 
                       $$ |  $$ |$$  __$$\ $$$\  $$ |$$  __$$\ $$  _____|

@@ -4,12 +4,17 @@ using System.Text.RegularExpressions;
 
 namespace Honse;
 
+
+
 struct HorseStats(float start, float middle, float end)
 {
     private float start = start;
     private float middle = middle;
     private float end = end;
     
+    /// <summary>
+    /// Generates random stats for a horse
+    /// </summary>
     public static HorseStats Random()
     {
         Random rand = new Random();
@@ -66,16 +71,23 @@ public class Horse
         MoveTo(this.x + x, this.y + y);
     }
 
+    
+    /// <summary>
+    /// Creates a blank space the size of the horse at the location of the horse
+    /// </summary>
     void Clear()
     {
         string sprite = animation.GetSprite();
         
         //replaces every char in sprite with a blank space except \n
-        sprite = Regex.Replace(sprite, @"[^\n]", " ");
+        sprite = Regex.Replace(sprite, @"[^\n]", " "); // denne linje er udarbejded med hjælp fra AI
         
         Screen.DisplayText(sprite, x, y);
     }
 
+    /// <summary>
+    /// Draws the horse at its current location
+    /// </summary>
     void Draw()
     {
         string sprite = animation.GetNextSprite();
