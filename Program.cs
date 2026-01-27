@@ -27,6 +27,8 @@ public static class Program
                     break;
                 }
             }
+            
+            Screen.Update();
             track.Update();
             Thread.Sleep(100);
         }
