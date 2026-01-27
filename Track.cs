@@ -4,7 +4,7 @@ public class Track
 {
     private Horse[] horses;
         
-    Track(int amount)
+    public Track(int amount)
     {
         horses = new Horse[amount];
         Animation animation = new Animation([

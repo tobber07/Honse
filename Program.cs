@@ -13,48 +13,21 @@ public static class Program
         Console.SetWindowSize(Screen.Width, Screen.Height);
         Console.CursorVisible = false;
         
-        // Console.SetBufferSize(Screen.Width, Screen.Height);
-
-
-        Console.WriteLine(Console.WindowWidth);
-        Console.WriteLine(Console.WindowHeight);
-        
         // MusicPlayer.Play();
-        // StartScreen.Display();
-        Console.ReadKey();
-        
-        Console.WriteLine(Console.BufferWidth);
-        Console.WriteLine(Console.BufferHeight);
-        
-        
-        
-        Horse horse = new Horse(10, 10, "peter", new Animation([
-            "Assets/Horses/Horse1/run1.txt",
-            "Assets/Horses/Horse1/run2.txt",
-            "Assets/Horses/Horse1/run3.txt"
-        ]));
-        
-        Horse horse2 = new Horse(10, 10, "peter", new Animation([
-            "Assets/Horses/Horse1/run1.txt",
-            "Assets/Horses/Horse1/run2.txt",
-            "Assets/Horses/Horse1/run3.txt"
-        ]));
-        
-        Horse horse3 = new Horse(10, 10, "peter", new Animation([
-            "Assets/Horses/Horse1/run1.txt",
-            "Assets/Horses/Horse1/run2.txt",
-            "Assets/Horses/Horse1/run3.txt"
-        ]));
-        
-        horse.MoveTo(50, 10);
-        horse2.MoveTo(50, 15);
-        horse3.MoveTo(50, 20);
+        StartScreen.Display();
+
+        Track track = new Track(3);
         
         while (true)
         {
-            horse.Move(1, 0);
-            horse2.Move(1,0);
-            horse3.Move(1,0);
+            if (Console.KeyAvailable)
+            {
+                if (Console.ReadKey().Key == ConsoleKey.Escape)
+                {
+                    break;
+                }
+            }
+            track.Update();
             Thread.Sleep(100);
         }
         
