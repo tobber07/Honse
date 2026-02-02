@@ -30,7 +30,8 @@ public class Horse
     private string name;
     private readonly Animation animation;
     private HorseStats stats;
-
+    private float distance;
+    
     static Random rnd = new Random();
 
     public Horse(int x, int y, string name, Animation animation)
@@ -104,5 +105,10 @@ public class Horse
     {
         string[] names = File.ReadAllLines("Assets/HorseNames.txt");
         return names[rnd.Next(0, names.Length - 1)];
+    }
+
+    public void RunAlongTrack(Track track)
+    {
+        
     }
 }

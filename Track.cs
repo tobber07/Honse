@@ -1,5 +1,13 @@
 ﻿namespace Honse;
 
+public enum RaceStage
+{
+    Start,
+    Middle,
+    End
+}
+
+
 public class Track
 {
     private Horse[] horses;
@@ -23,7 +31,7 @@ public class Track
     {
         foreach (Horse horse in horses)
         {
-            
+            horse.RunAlongTrack(this);
         }
     }
 }

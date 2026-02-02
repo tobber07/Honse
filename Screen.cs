@@ -33,10 +33,41 @@ public static class Screen
     }
 
     /// <summary>
+    /// Displays text centered horizontally
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="y"></param>
+    public static void DisplayTextCentered(string text, int y)
+    {
+        int longest = 0;
+        foreach (string line in text.Split("\n"))
+        {
+            int len = line.Length;
+            if (len > longest) longest = len;
+        }
+        DisplayText(text, (Screen.Width/2)-(longest/2), y);
+    }
+
+    /// <summary>
     /// Clears the screen.
     /// </summary>
     public static void Clear()
     {
         Console.Clear();
+    }
+
+    
+    
+    public static void Update()
+    {
+        if (Console.BufferWidth < Width)
+        {
+            Console.BufferWidth = Width;
+        }
+
+        if (Console.BufferHeight < Height)
+        {
+            Console.BufferHeight = Height;
+        }
     }
 }
