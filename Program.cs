@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO.Compression;
 using System.Runtime.InteropServices;
 
 
@@ -14,9 +15,9 @@ public static class Program
         Console.CursorVisible = false;
         
         // MusicPlayer.Play();
-        StartScreen.Display();
+        //StartScreen.Display();
 
-        Track track = new Track(3);
+        Track track = new Track(8);
         
         while (true)
         {

@@ -8,9 +8,9 @@ namespace Honse;
 
 struct HorseStats(float start, float middle, float end)
 {
-    private float start = start;
-    private float middle = middle;
-    private float end = end;
+    public float start = start;
+    public float middle = middle;
+    public float end = end;
     
     /// <summary>
     /// Generates random stats for a horse
@@ -29,8 +29,10 @@ public class Horse
     private int y;
     private string name;
     private readonly Animation animation;
-    private HorseStats stats;
+    private readonly HorseStats stats;
     private float distance;
+    
+    private float baseSpeed = 10;
     
     static Random rnd = new Random();
 
@@ -61,6 +63,16 @@ public class Horse
         Draw();
     }
 
+    public void MoveToX(int x)
+    {
+        MoveTo(x, this.y);
+    }
+    
+    public void MoveToY(int y)
+    {
+        MoveTo(this.x, y);
+    }
+
     
     /// <summary>
     /// Moves horse by <c>x</c> and <c>y</c> <br/>
@@ -83,7 +95,9 @@ public class Horse
         
         //replaces every char in sprite with a blank space except \n
         sprite = Regex.Replace(sprite, @"[^\n]", " "); // denne linje er udarbejded med hjælp fra AI
+        string blankName = Regex.Replace(name, @"[^\n]", " ");
         
+        Screen.DisplayText(blankName, x, y-1);
         Screen.DisplayText(sprite, x, y);
     }
 
@@ -94,6 +108,7 @@ public class Horse
     {
         string sprite = animation.GetNextSprite();
         
+        Screen.DisplayText(name, x, y-1);
         Screen.DisplayText(sprite, x, y);
     }
 
@@ -107,8 +122,41 @@ public class Horse
         return names[rnd.Next(0, names.Length - 1)];
     }
 
-    public void RunAlongTrack(Track track)
+    
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="track"></param>
+    /// <returns>total distance</returns>
+    public float RunAlongTrack(Track track)
     {
+        RaceStage stage = track.GetRaceStage(distance);
+        float speed = baseSpeed;
+        switch (stage)
+        {
+            case RaceStage.Start:
+                speed += stats.start;
+                break;
+            case RaceStage.Middle:
+                speed += stats.middle;
+                break;
+            case RaceStage.End:
+                speed += stats.end;
+                break;
+            case RaceStage.Finished:
+                speed = 0;
+                break;
+        }
         
+        distance += speed;
+        distance = float.Min(distance, track.GetLength());
+        return distance;
     }
+
+    public float GetDistance()
+    {
+        return distance;
+    }
+    
+    
 }

@@ -22,6 +22,11 @@ public static class Screen
     /// </example>
     public static void DisplayText(string text, int x, int y)
     {
+        if (x < 0 || y < 0 || x >= Width || y >= Height)
+        {
+            return;
+        }
+        
         int lineNum = 0;
         //splits the text at \n (new line) then loops through them
         foreach (string line in text.Split("\n"))
