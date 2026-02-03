@@ -28,7 +28,7 @@ public static class Screen
         }
         
         int lineNum = 0;
-        //splits the text at \n (new line) then loops through them
+        //splits the text at \n (new line) then loops through the lines
         foreach (string line in text.Split("\n"))
         {
             Console.SetCursorPosition(x, y+lineNum);
@@ -59,20 +59,37 @@ public static class Screen
     public static void Clear()
     {
         Console.Clear();
+        Console.CursorVisible = false;
     }
 
     
     
+    static int lastBufferWidth;
+    static int lastBufferHeight;
+    
     public static void Update()
     {
-        if (Console.BufferWidth < Width)
+        int bufferWidth = Console.BufferWidth;
+        int bufferHeight = Console.BufferHeight;
+        
+        if (bufferWidth < Width)
         {
-            Console.BufferWidth = Width;
+            Console.SetBufferSize(Width, bufferHeight);
+            Console.SetWindowSize(Width, bufferHeight);
         }
 
-        if (Console.BufferHeight < Height)
+        if (bufferHeight < Height)
         {
-            Console.BufferHeight = Height;
+            Console.SetBufferSize(bufferWidth, Height);
+            Console.SetWindowSize(bufferWidth, Console.WindowHeight);
         }
+
+        if (lastBufferWidth != bufferWidth || lastBufferHeight != bufferHeight)
+        {
+            Screen.Clear();
+        }
+        
+        lastBufferWidth = bufferWidth;
+        lastBufferHeight = bufferHeight;
     }
 }

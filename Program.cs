@@ -16,8 +16,8 @@ public static class Program
         
         // MusicPlayer.Play();
         //StartScreen.Display();
-
-        Track track = new Track(8);
+        
+        Track track = new Track(12);
         
         while (true)
         {

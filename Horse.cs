@@ -32,7 +32,8 @@ public class Horse
     private readonly HorseStats stats;
     private float distance;
     
-    private float baseSpeed = 10;
+    private float baseSpeed = 3;
+    private float statMultiplier = .75f;
     
     static Random rnd = new Random();
 
@@ -135,13 +136,13 @@ public class Horse
         switch (stage)
         {
             case RaceStage.Start:
-                speed += stats.start;
+                speed += stats.start * statMultiplier;
                 break;
             case RaceStage.Middle:
-                speed += stats.middle;
+                speed += stats.middle * statMultiplier;
                 break;
             case RaceStage.End:
-                speed += stats.end;
+                speed += stats.end * statMultiplier;
                 break;
             case RaceStage.Finished:
                 speed = 0;
