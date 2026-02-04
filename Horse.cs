@@ -32,8 +32,8 @@ public class Horse
     private readonly HorseStats stats;
     private float distance;
     
-    private float baseSpeed = 3;
-    private float statMultiplier = .75f;
+    private float baseSpeed = 3.5f;
+    private float statMultiplier = .5f;
     
     static Random rnd = new Random();
 
