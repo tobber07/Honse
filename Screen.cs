@@ -53,6 +53,11 @@ public static class Screen
         DisplayText(text, (Screen.Width/2)-(longest/2), y);
     }
 
+    public static void DisplayTextWithFont(string text, string font, int x, int y)
+    {
+        
+    }
+
     /// <summary>
     /// Clears the screen.
     /// </summary>

@@ -18,7 +18,8 @@ public class Track
     private float length = 1400; //the total length of the track, standard is 1400m
     private float startDistance = 400; //the point the track goes from start to middle
     private float middleDistance = 1000; //the point the track goes from middle to end
-        
+
+    private int AmountFinished = 0;
     
     public Track(int amount)
     {
@@ -59,10 +60,17 @@ public class Track
     {
         float furthestDistance = 0;
         //moves horses and finds the furthest
-        foreach (Horse horse in horses)
+        for (int i = 0; i < horses.Length; i++)
         {
-            float distance = horse.RunAlongTrack(this);
+            float distance = horses[i].RunAlongTrack(this);
             if (distance > furthestDistance) furthestDistance = distance;
+
+            //crossed the finish line
+            if (distance >= length)
+            {
+                
+            }
+            
         }
         
         //draws the track
