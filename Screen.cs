@@ -55,7 +55,12 @@ public static class Screen
 
     public static void DisplayTextWithFont(string text, string font, int x, int y)
     {
-        
+        foreach (char chr in text)
+        {
+            string newText = File.ReadAllText("Assets\\Fonts\\" + font + "\\" + chr + ".txt");
+            Console.WriteLine("⢺ \n⠼⠄");
+            DisplayText(newText, x, y);
+        }
     }
 
     /// <summary>

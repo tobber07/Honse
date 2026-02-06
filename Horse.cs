@@ -32,10 +32,12 @@ public class Horse
     private readonly HorseStats stats;
     private float distance;
     
-    private float baseSpeed = 3.5f;
+    private float baseSpeed = 5f;
     private float statMultiplier = .5f;
     
     static Random rnd = new Random();
+
+    public bool finished = false;
 
     public Horse(int x, int y, string name, Animation animation)
     {
@@ -55,11 +57,8 @@ public class Horse
     {
         //clear current horse
         Clear();
-        
         //move horse
-        this.x = x;
-        this.y = y;
-        
+        SetPosition(x,y);
         //draw horse at new pos
         Draw();
     }
@@ -92,14 +91,12 @@ public class Horse
     /// </summary>
     void Clear()
     {
-        string sprite = animation.GetSprite();
-        
         //replaces every char in sprite with a blank space except \n
-        sprite = Regex.Replace(sprite, @"[^\n]", " "); // denne linje er udarbejded med hjælp fra AI
+        string blankSprite = Regex.Replace(animation.GetSprite(), @"[^\n]", " "); // denne linje er udarbejded med hjælp fra AI
         string blankName = Regex.Replace(name, @"[^\n]", " ");
         
         Screen.DisplayText(blankName, x, y-1);
-        Screen.DisplayText(sprite, x, y);
+        Screen.DisplayText(blankSprite, x, y);
     }
 
     /// <summary>
@@ -107,7 +104,8 @@ public class Horse
     /// </summary>
     void Draw()
     {
-        string sprite = animation.GetNextSprite();
+        //if the horse has finished dont select next frame to stop animation
+        string sprite = finished ? animation.GetSprite() :animation.GetNextSprite();
         
         Screen.DisplayText(name, x, y-1);
         Screen.DisplayText(sprite, x, y);
@@ -158,6 +156,21 @@ public class Horse
     {
         return distance;
     }
-    
+
+    public string GetName()
+    {
+        return name;
+    }
+
+    /// <summary>
+    /// Sets the position of the horse without updating the visuals;
+    /// </summary>
+    /// <param name="x">New x</param>
+    /// <param name="y">Mew y</param>
+    public void SetPosition(int x, int y)
+    {
+        this.x = x;
+        this.y = y;
+    }
     
 }

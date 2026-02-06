@@ -14,11 +14,14 @@ public static class Program
         Console.SetWindowSize(Screen.Width, Screen.Height);
         Console.CursorVisible = false;
         
-        // MusicPlayer.Play();
         //StartScreen.Display();
+        
         
         Track track = new Track(12);
         
+        
+        //track.SelectHorse();
+        Console.ReadKey();
         while (true)
         {
             if (Console.KeyAvailable)

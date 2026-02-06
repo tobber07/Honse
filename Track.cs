@@ -56,19 +56,54 @@ public class Track
         }
     }
 
+    public void SelectHorse()
+    {
+        Screen.DisplayTextCentered("Select a horse:", 10);
+        int i = 1;
+        foreach (Horse horse in horses)
+        {
+            Screen.DisplayTextCentered($"[{i}] {horse.GetName()}", 10+i);
+            i++;
+        }
+
+        int num;
+        while (true)
+        {
+            string input = Console.ReadLine();
+            
+            if (int.TryParse(input, out num))
+            {
+                if (num >= 1 && num <= horses.Length)
+                {
+                    break;
+                }
+            }
+            Console.WriteLine("Not a valid number");
+
+        }
+        
+    }
+
     public void Update()
     {
         float furthestDistance = 0;
         //moves horses and finds the furthest
         for (int i = 0; i < horses.Length; i++)
         {
+            Horse horse = horses[i];
+            
+            
             float distance = horses[i].RunAlongTrack(this);
             if (distance > furthestDistance) furthestDistance = distance;
-
+            
+            if (horse.finished) continue;
+            
             //crossed the finish line
             if (distance >= length)
             {
-                
+                AmountFinished++;
+                horses[i].finished = true;
+                Screen.DisplayText(AmountFinished.ToString(), Screen.Width/2 + 7, 11 + (i*3));
             }
             
         }
@@ -88,10 +123,9 @@ public class Track
     {
         string text = GenerateSingleTrack(distance);
         
-        for (int i = 0; i < tracks; i++)
+        for (int i = 0; i < tracks+1; i++)
         {
             Screen.DisplayText(text, 0, 10 + (i*3));
-            //horses[i].MoveTo(Screen.Width/2, 11 + (i*3));
         }
         
     }
@@ -107,7 +141,6 @@ public class Track
         int offset = (int)(distance % 100);
         
         int amount = (int)float.Ceiling((Screen.Width-offset)/100.0f);
-
 
         int startValue = (int)distance - (Screen.Width / 2) + (100-offset);
         
