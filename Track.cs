@@ -1,4 +1,6 @@
-﻿namespace Honse;
+﻿using System.Diagnostics;
+
+namespace Honse;
 
 public enum RaceStage
 {
@@ -8,80 +10,41 @@ public enum RaceStage
     Finished
 }
 
-
 public class Track
 {
     private Horse[] horses;
 
     private int tracks; // the amount of tracks, 1 horse runs on 1 track
     
-    private float length = 1400; //the total length of the track, standard is 1400m
+    private float length = 1400f; //the total length of the track, standard is 1400m
     private float startDistance = 400; //the point the track goes from start to middle
     private float middleDistance = 1000; //the point the track goes from middle to end
 
     private int AmountFinished = 0;
     
-    public Track(int amount)
-    {
-        tracks = amount;
         
-        SpawnHorses(amount);
-    }
-        
-    public Track(int amount, float length, float startDistance, float middleDistance)
+    public Track(float length, float startDistance, float middleDistance)
     {
-        tracks = amount;
         this.length = length;
         this.startDistance = startDistance;
         this.middleDistance = middleDistance;
+    }
+    
+    public void StartRace(Horse[] horses)
+    {
+        this.horses = horses;
+        tracks = horses.Length;
         
-        SpawnHorses(amount);
-
+        for (int i = 0; i < tracks; i++)
+        {
+            horses[i].SetPosition(Screen.Width / 2, 11 + (i * 3));
+        }
         
     }
 
-    void SpawnHorses(int amount)
+    public void EndRace()
     {
-        horses = new Horse[amount];
-        
-        for (int i = 0; i < amount; i++)
-        {
-            Animation animation = new Animation([
-                "Assets/Horses/Horse1/run1.txt",
-                "Assets/Horses/Horse1/run2.txt",
-                "Assets/Horses/Horse1/run3.txt"
-            ]);
-            horses[i] = new Horse(0, i * 5, Horse.RandomName(), animation);
-            horses[i].MoveTo(Screen.Width / 2, 11 + (i * 3));
-        }
-    }
-
-    public void SelectHorse()
-    {
-        Screen.DisplayTextCentered("Select a horse:", 10);
-        int i = 1;
-        foreach (Horse horse in horses)
-        {
-            Screen.DisplayTextCentered($"[{i}] {horse.GetName()}", 10+i);
-            i++;
-        }
-
-        int num;
-        while (true)
-        {
-            string input = Console.ReadLine();
-            
-            if (int.TryParse(input, out num))
-            {
-                if (num >= 1 && num <= horses.Length)
-                {
-                    break;
-                }
-            }
-            Console.WriteLine("Not a valid number");
-
-        }
-        
+        Manager.EndRace();   
     }
 
     public void Update()
@@ -96,14 +59,19 @@ public class Track
             float distance = horses[i].RunAlongTrack(this);
             if (distance > furthestDistance) furthestDistance = distance;
             
-            if (horse.finished) continue;
+            if (horse.finishPosition != 0) continue;
             
             //crossed the finish line
             if (distance >= length)
             {
                 AmountFinished++;
-                horses[i].finished = true;
+                horses[i].finishPosition = AmountFinished;
                 Screen.DisplayText(AmountFinished.ToString(), Screen.Width/2 + 7, 11 + (i*3));
+
+                if (AmountFinished >= horses.Length)
+                {
+                    EndRace();
+                }
             }
             
         }

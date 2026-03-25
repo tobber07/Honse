@@ -52,6 +52,21 @@ public static class Screen
         }
         DisplayText(text, (Screen.Width/2)-(longest/2), y);
     }
+    
+    public static void DisplayTextCentered(string[] text, int y)
+    {
+        int longest = 0;
+        foreach (string line in text)
+        {
+            int len = line.Length;
+            if (len > longest) longest = len;
+        }
+        foreach (string line in text)
+        {
+            DisplayText(line, (Screen.Width/2)-(longest/2), y);
+        }
+        
+    }
 
     public static void DisplayTextWithFont(string text, string font, int x, int y)
     {

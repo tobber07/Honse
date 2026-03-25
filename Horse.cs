@@ -31,13 +31,16 @@ public class Horse
     private readonly Animation animation;
     private readonly HorseStats stats;
     private float distance;
+    private int bet;
+    
     
     private float baseSpeed = 5f;
     private float statMultiplier = .5f;
     
     static Random rnd = new Random();
 
-    public bool finished = false;
+    //public bool finished = false;
+    public int finishPosition = 0;
 
     public Horse(int x, int y, string name, Animation animation)
     {
@@ -46,6 +49,13 @@ public class Horse
         this.name = name;
         this.animation = animation;
         stats = HorseStats.Random();
+
+        //randomize starting sprite
+        for (int i = 0; i < rnd.Next(2); i++)
+        {
+            this.animation.NextSprite();
+        }
+        
     }
     
     /// <summary>
@@ -104,10 +114,10 @@ public class Horse
     /// </summary>
     void Draw()
     {
-        //if the horse has finished dont select next frame to stop animation
-        string sprite = finished ? animation.GetSprite() :animation.GetNextSprite();
+        //if the horse has finished don't select next frame to stop animation
+        string sprite = finishPosition != 0 ? animation.GetSprite() :animation.GetNextSprite();
         
-        Screen.DisplayText(name, x, y-1);
+        Screen.DisplayText(name + "==", x, y-1);
         Screen.DisplayText(sprite, x, y);
     }
 
@@ -152,6 +162,16 @@ public class Horse
         return distance;
     }
 
+    public int CalculateWinnings(int totalHorses)
+    {
+        if (finishPosition <= totalHorses/2)
+        {
+            //1 << finishPosition is a substitution for 2^finishPosition
+            return (int)(bet * ((float)totalHorses / (1 << finishPosition)));
+        }
+        return 0;
+    }
+
     public float GetDistance()
     {
         return distance;
@@ -171,6 +191,11 @@ public class Horse
     {
         this.x = x;
         this.y = y;
+    }
+
+    public void SetBet(int bet)
+    {
+        this.bet = bet;
     }
     
 }

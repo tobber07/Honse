@@ -16,12 +16,8 @@ public static class Program
         
         //StartScreen.Display();
         
+        Manager.StartGame();
         
-        Track track = new Track(12);
-        
-        
-        //track.SelectHorse();
-        Console.ReadKey();
         while (true)
         {
             if (Console.KeyAvailable)
@@ -33,12 +29,24 @@ public static class Program
             }
             
             Screen.Update();
-            track.Update();
+            Manager.UpdateGame();
+            
             Thread.Sleep(100);
         }
         
         Console.ReadLine();
     }
 
+    static int LongestName(Horse[] horses)
+    {
+        int longestName = 0;
+        foreach (Horse horse in horses)
+        {
+            longestName = int.Max(longestName, horse.GetName().Length);
+
+        }
+
+        return longestName;
+    }
 
 }
