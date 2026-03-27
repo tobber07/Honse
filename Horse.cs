@@ -4,8 +4,6 @@ using System.Text.RegularExpressions;
 
 namespace Honse;
 
-
-
 struct HorseStats(float start, float middle, float end)
 {
     public float start = start;
@@ -21,7 +19,6 @@ struct HorseStats(float start, float middle, float end)
         return new HorseStats(rand.NextSingle(), rand.NextSingle(), rand.NextSingle());
     }
 }
-
 
 public class Horse
 {
@@ -120,6 +117,12 @@ public class Horse
         Screen.DisplayText(name + "==", x, y-1);
         Screen.DisplayText(sprite, x, y);
     }
+
+    public void DisplayStats()
+    {
+        
+    }
+    
 
     /// <summary>
     /// Returns a random name.

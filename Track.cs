@@ -71,6 +71,7 @@ public class Track
                 if (AmountFinished >= horses.Length)
                 {
                     EndRace();
+                    return;
                 }
             }
             

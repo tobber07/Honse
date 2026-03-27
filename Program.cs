@@ -17,7 +17,6 @@ public static class Program
         //StartScreen.Display();
         
         Manager.StartGame();
-        
         while (true)
         {
             if (Console.KeyAvailable)
@@ -43,7 +42,6 @@ public static class Program
         foreach (Horse horse in horses)
         {
             longestName = int.Max(longestName, horse.GetName().Length);
-
         }
 
         return longestName;

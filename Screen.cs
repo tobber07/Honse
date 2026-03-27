@@ -2,6 +2,13 @@
 
 public static class Screen
 {
+
+    public enum RectFillType
+    {
+        Hollow,
+        Full
+    }
+    
     public const int Width = 200;
     public const int Height = 50;
     
@@ -78,6 +85,56 @@ public static class Screen
         }
     }
 
+    
+    public static void DrawRect(int x, int y, int width, int height, bool fill = false, RectFillType fillType = RectFillType.Hollow)
+    {
+        if(width <= 1 || height <= 1) return;
+        
+        Console.SetCursorPosition(x, y);
+        Console.Write("╔");
+        for (int i = 0; i < width-2; i++)
+        {
+            Console.Write("═");
+        }
+        Console.Write("╗");
+        
+        for (int i = y+1; i < y+height-1; i++)
+        {
+            Console.SetCursorPosition(x, i);
+            Console.Write("║");
+            
+            Console.SetCursorPosition(x+width-1, i);
+            Console.Write("║");
+        }
+        
+        Console.SetCursorPosition(x, y+height-1);
+        Console.Write("╚");
+        for (int i = 0; i < width-2; i++)
+        {
+            Console.Write("═");
+        }
+        Console.Write("╝");
+
+        if (!fill) return;
+        //fills the rect
+        for (int i = y + 1; i < y + height - 1; i++)
+        {
+            Console.SetCursorPosition(x+1, i);
+            for (int j = 0; j < width - 2; j++)
+            {
+                switch (fillType)
+                {
+                    case RectFillType.Hollow:
+                        Console.Write(" ");
+                        break;
+                    case RectFillType.Full:
+                        Console.Write("█");
+                        break;
+                }
+            }
+        }
+    }
+
     /// <summary>
     /// Clears the screen.
     /// </summary>
@@ -85,6 +142,15 @@ public static class Screen
     {
         Console.Clear();
         Console.CursorVisible = false;
+    }
+
+    public static void ClearLine(int y)
+    {
+        Console.SetCursorPosition(0, y);
+        for (int i = 0; i < Screen.Width; i++)
+        {
+            Console.Write(" ");
+        }
     }
 
     

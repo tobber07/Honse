@@ -9,7 +9,7 @@ public static class Manager
 
     public static void StartGame()
     {
-        currentTrack = new Track(400, 100, 3000);
+        currentTrack = new Track(400, 100, 300);
         CreateHorses(12);
         SetBets();
     }
@@ -48,7 +48,12 @@ public static class Manager
     public static void EndRace()
     {
         raceStarted = false;
-        money += CalculateWinnings(horses);
+        int winnings = CalculateWinnings(horses);
+        money += winnings;
+        Screen.DrawRect(Screen.Width/2 -9, 9,19,5, true, Screen.RectFillType.Hollow);
+        Screen.DisplayTextCentered(winnings <= 0 ?  "Skill issue" : "Congratulations", 10);
+        Screen.DisplayTextCentered("You won:", 11);
+        Screen.DisplayTextCentered(winnings.ToString(), 12);
     }
 
     public static int CalculateWinnings(Horse[] horses)
@@ -57,7 +62,7 @@ public static class Manager
         int winnings = 0;
         foreach (Horse horse in horses)
         {
-            horse.CalculateWinnings(totalHorses);
+            winnings += horse.CalculateWinnings(totalHorses);
         }
         return winnings;
     }
@@ -70,7 +75,19 @@ public static class Manager
             Screen.Clear();
             Screen.DisplayTextCentered("Enter a bet for " + selectedHorse.GetName() + ":", 10);
             Console.SetCursorPosition(Screen.Width/2, 11);
-            Console.ReadLine();
+            while (true)
+            {
+                String input = Console.ReadLine();
+                int bet;
+                if (int.TryParse(input, out bet))
+                {
+                    selectedHorse.SetBet(bet);
+                    break;
+                }
+                Screen.ClearLine(11);
+                Console.SetCursorPosition(Screen.Width/2, 11);
+            }
+
             break;
         }
         
