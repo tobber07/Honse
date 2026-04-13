@@ -153,6 +153,16 @@ public static class Screen
         }
     }
 
+    public static int GetCenterX()
+    {
+        return Width / 2;
+    }
+    
+    public static int GetCenterY()
+    {
+        return Height / 2;
+    }
+
     
     
     static int lastBufferWidth;

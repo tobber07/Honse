@@ -42,6 +42,10 @@ public static class Manager
     public static void StartRace()
     {
         raceStarted = true;
+        foreach (Horse horse in horses)
+        {
+            horse.SetRandomMood();
+        }
         currentTrack.StartRace(horses);
     }
 
@@ -63,6 +67,7 @@ public static class Manager
         foreach (Horse horse in horses)
         {
             winnings += horse.CalculateWinnings(totalHorses);
+            horse.SetBet(0);
         }
         return winnings;
     }
@@ -71,24 +76,19 @@ public static class Manager
     {
         while (true)
         {
-            Horse selectedHorse = horses[SelectHorse()];
             Screen.Clear();
-            Screen.DisplayTextCentered("Enter a bet for " + selectedHorse.GetName() + ":", 10);
-            Console.SetCursorPosition(Screen.Width/2, 11);
-            while (true)
+            
+            Screen.DisplayTextCentered("PRESS SPACE TO START", 10 + horses.Length + 2);
+            
+            int selectedHorseId = SelectHorse();
+            //if space was pressed exit the loop to start the race
+            if (selectedHorseId == -1)
             {
-                String input = Console.ReadLine();
-                int bet;
-                if (int.TryParse(input, out bet))
-                {
-                    selectedHorse.SetBet(bet);
-                    break;
-                }
-                Screen.ClearLine(11);
-                Console.SetCursorPosition(Screen.Width/2, 11);
+                break;
             }
-
-            break;
+            Horse selectedHorse = horses[selectedHorseId];
+            Screen.Clear();
+            selectedHorse.DisplayStats(10);
         }
         
         StartRace();
@@ -134,6 +134,12 @@ public static class Manager
 
                 else if (key == ConsoleKey.Enter)
                 {
+                    break;
+                }
+                
+                else if (key == ConsoleKey.Spacebar)
+                {
+                    selection = -1;
                     break;
                 }
             }

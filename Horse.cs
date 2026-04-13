@@ -29,10 +29,13 @@ public class Horse
     private readonly HorseStats stats;
     private float distance;
     private int bet;
+
+    private float mood;
     
     
     private float baseSpeed = 5f;
     private float statMultiplier = .5f;
+    private float moodMultiplier = .25f;
     
     static Random rnd = new Random();
 
@@ -46,6 +49,7 @@ public class Horse
         this.name = name;
         this.animation = animation;
         stats = HorseStats.Random();
+        SetRandomMood();
 
         //randomize starting sprite
         for (int i = 0; i < rnd.Next(2); i++)
@@ -118,12 +122,86 @@ public class Horse
         Screen.DisplayText(sprite, x, y);
     }
 
-    public void DisplayStats()
+    public void DisplayStats(int height)
     {
+        //INFO//
+        Screen.DisplayText("┌────────┐\n│  /\\___ │\n│ / O  º\\│\n│/  /¯¯¯¯│\n└────────┘",Screen.GetCenterX()-15, height+1); //image
+        Screen.DisplayText("Name: " + name, Screen.GetCenterX()-15 + 11, height+2); //name
+        Screen.DisplayText("Bet: " + bet, Screen.GetCenterX()-15 + 11, height+4); //bet
+        
+        //STATS//
+        Screen.DisplayText("Start:  " + stats.start.ToString("F3"), Screen.GetCenterX()-14, height+6); //speed
+        Screen.DisplayText("Middle: " + stats.middle.ToString("F3"), Screen.GetCenterX()-14, height+7); //speed
+        Screen.DisplayText("End:    " + stats.end.ToString("F3"), Screen.GetCenterX()-14, height+8); //speed
+        
+        //BORDER//
+        Screen.DrawRect(Screen.GetCenterX()-16, height, 16*2, 10); //border
+        
+        
+        Screen.DisplayText("[Set bet]",Screen.GetCenterX()-15, height+10);
+        Screen.DisplayText("[Back]",Screen.GetCenterX()+9, height+10);
+        
+        int selection = 0;
+        while (true)
+        {
+            if (Console.KeyAvailable)
+            {
+                Screen.DisplayText(" ", Screen.GetCenterX()-16 + selection*24, height+10); //clear cursor
+                ConsoleKey key = Console.ReadKey(true).Key;
+                
+                if (key == ConsoleKey.RightArrow)
+                {
+                    selection = int.Min(selection + 1, 1);
+                }
+
+                else if (key == ConsoleKey.LeftArrow)
+                {
+                    selection = int.Max(selection - 1, 0);
+                }
+
+                else if (key == ConsoleKey.Enter)
+                {
+                    break;
+                }
+            }
+            Screen.DisplayText(">", Screen.GetCenterX()-16 + selection*24, height+10); // draw cursor
+        }
+
+        if (selection == 0)
+        {
+            //set bet
+            Screen.DisplayText("        ", Screen.GetCenterX()+1, height+4); // clear
+            Console.SetCursorPosition(Screen.GetCenterX()+1, height+4);
+            Console.CursorVisible = true;
+            while (true)
+            {
+                String input = Console.ReadLine();
+                int bet;
+                if (int.TryParse(input, out bet))
+                {
+                    SetBet(bet);
+                    break;
+                }
+                Screen.DisplayText("        ", Screen.GetCenterX()+1, height+4); //clear
+                Console.SetCursorPosition(Screen.GetCenterX()+1, height+4);
+            }
+            
+            Console.CursorVisible = false;
+        }
+        else if (selection == 1)
+        {
+            //go back
+            return;
+        }
         
     }
-    
 
+    public void SetRandomMood()
+    {
+        mood = rnd.NextSingle();
+    }
+    
+    
     /// <summary>
     /// Returns a random name.
     /// </summary>
@@ -147,13 +225,13 @@ public class Horse
         switch (stage)
         {
             case RaceStage.Start:
-                speed += stats.start * statMultiplier;
+                speed += stats.start * statMultiplier + mood * moodMultiplier;
                 break;
             case RaceStage.Middle:
-                speed += stats.middle * statMultiplier;
+                speed += stats.middle * statMultiplier + mood * moodMultiplier;
                 break;
             case RaceStage.End:
-                speed += stats.end * statMultiplier;
+                speed += stats.end * statMultiplier + mood * moodMultiplier;
                 break;
             case RaceStage.Finished:
                 speed = 0;
