@@ -163,6 +163,11 @@ public class Horse
                 {
                     break;
                 }
+                
+                else if (key == ConsoleKey.Escape)
+                {
+                    return;
+                }
             }
             Screen.DisplayText(">", Screen.GetCenterX()-16 + selection*24, height+10); // draw cursor
         }
@@ -170,7 +175,7 @@ public class Horse
         if (selection == 0)
         {
             //set bet
-            Screen.DisplayText("        ", Screen.GetCenterX()+1, height+4); // clear
+            Screen.DisplayText("            ", Screen.GetCenterX()+1, height+4); // clear
             Console.SetCursorPosition(Screen.GetCenterX()+1, height+4);
             Console.CursorVisible = true;
             while (true)
@@ -179,10 +184,13 @@ public class Horse
                 int bet;
                 if (int.TryParse(input, out bet))
                 {
-                    SetBet(bet);
-                    break;
+                    if (bet >= 0)
+                    {
+                        SetBet(bet);
+                        break;   
+                    }
                 }
-                Screen.DisplayText("        ", Screen.GetCenterX()+1, height+4); //clear
+                Screen.DisplayText("            ", Screen.GetCenterX()+1, height+4); //clear
                 Console.SetCursorPosition(Screen.GetCenterX()+1, height+4);
             }
             
@@ -221,17 +229,17 @@ public class Horse
     public float RunAlongTrack(Track track)
     {
         RaceStage stage = track.GetRaceStage(distance);
-        float speed = baseSpeed;
+        float speed = baseSpeed+ mood * moodMultiplier;
         switch (stage)
         {
             case RaceStage.Start:
-                speed += stats.start * statMultiplier + mood * moodMultiplier;
+                speed += stats.start * statMultiplier;
                 break;
             case RaceStage.Middle:
-                speed += stats.middle * statMultiplier + mood * moodMultiplier;
+                speed += stats.middle * statMultiplier;
                 break;
             case RaceStage.End:
-                speed += stats.end * statMultiplier + mood * moodMultiplier;
+                speed += stats.end * statMultiplier;
                 break;
             case RaceStage.Finished:
                 speed = 0;
@@ -277,6 +285,11 @@ public class Horse
     public void SetBet(int bet)
     {
         this.bet = bet;
+    }
+
+    public int GetBet()
+    {
+        return bet;
     }
     
 }
