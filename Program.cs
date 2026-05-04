@@ -14,7 +14,7 @@ public static class Program
         Console.SetWindowSize(Screen.Width, Screen.Height);
         Console.CursorVisible = false;
         
-        //StartScreen.Display();
+        StartScreen.Display();
         
         Manager.StartGame();
         while (true)

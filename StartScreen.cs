@@ -9,7 +9,6 @@ public class StartScreen
     public static void Display()
     {
         Screen.Clear();
-
         
         Screen.DisplayTextCentered("""
                       ¤¤¤¤%%%%###############%%%¤@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@¤
