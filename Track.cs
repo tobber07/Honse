@@ -55,8 +55,7 @@ public class Track
         {
             Horse horse = horses[i];
             
-            
-            float distance = horses[i].RunAlongTrack(this);
+            float distance = horse.RunAlongTrack(this);
             if (distance > furthestDistance) furthestDistance = distance;
             
             if (horse.finishPosition != 0) continue;
@@ -65,8 +64,8 @@ public class Track
             if (distance >= length)
             {
                 AmountFinished++;
-                horses[i].finishPosition = AmountFinished;
-                Screen.DisplayText(AmountFinished.ToString(), Screen.Width/2 + 7, 11 + (i*3));
+                horse.finishPosition = AmountFinished;
+                Screen.DisplayText(AmountFinished.ToString(), Screen.GetCenterX() + 7, 11 + (i*3));
 
                 if (AmountFinished >= horses.Length)
                 {
@@ -74,7 +73,6 @@ public class Track
                     return;
                 }
             }
-            
         }
         
         //draws the track
@@ -83,7 +81,7 @@ public class Track
         //moves the horses on the screen
         foreach (Horse horse in horses)
         {
-            horse.MoveToX(Screen.Width/2-(int)(furthestDistance-horse.GetDistance()));
+            horse.MoveToX(Screen.GetCenterX()-(int)(furthestDistance-horse.GetDistance()));
         }
         
     }
